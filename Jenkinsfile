@@ -1,15 +1,16 @@
-
 pipeline{
     agent any
     tools{
         maven 'M3'
     }
     stages{
-        stage("Create Folder"){
-            steps{
-                sh "mkdir -p ${env.JOB_NAME}"
-            }
-        }
+		stage('SCM Checkout'){
+            stepss{
+		        git branch: 'master', 
+	            credentialsId: 'GitCred',
+	            url: 'https://github.com/Dileep9652/MavenTst.git'
+			}
+		}
         stage("Maven Build"){
             steps{
                 bat 'mvn clean package'
@@ -19,4 +20,3 @@ pipeline{
         }
     }
 }
-
