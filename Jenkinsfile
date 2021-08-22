@@ -1,15 +1,22 @@
+@Library('javahome-libs') _
 pipeline{
     agent any
     tools{
         maven 'M3'
     }
-    stage('SCM Checkout'){
-        git branch: 'master', 
-	        credentialsId: 'GitCred',
-	        url: 'https://github.com/Dileep9652/MavenTst.git'
-    }
-    stage('Maven Build'){
-        def mvnHome = tool name: 'M3', type: 'maven'
-		bat "${mvnHome}/bin/mvn clean package"
+    stages{
+        stage("Create Folder"){
+            steps{
+                sh "mkdir -p ${env.JOB_NAME}"
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                bat 'mvn clean package'
+            }
+        }
+        
+        }
     }
 }
+
