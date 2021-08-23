@@ -3,13 +3,20 @@ pipeline{
     tools{
         maven 'M3'
     }
-    stage('SCM Checkout'){
-        git branch: 'master', 
-	        credentialsId: 'GitCred',
-	        url: 'https://github.com/Dileep9652/MavenTst.git'
-    }
-    stage('Maven Build'){
-        def mvnHome = tool name: 'M3', type: 'maven'
-		bat "${mvnHome}/bin/mvn clean package"
+    stages{
+		stage('SCM Checkout'){
+            steps{
+		        git branch: 'master', 
+	            credentialsId: 'GitCred',
+	            url: 'https://github.com/Dileep9652/MavenTst.git'
+			}
+		}
+        stage("Maven Build"){
+            steps{
+                bat 'mvn clean package'
+            }
+        }
+        
+        }
     }
 }
