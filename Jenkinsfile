@@ -10,6 +10,6 @@ pipeline{
     }
     stage('Maven Build'){
         def mvnHome = tool name: 'M3', type: 'maven'
-		sh "${mvnHome}/bin/mvn clean package"
+		bat "${mvnHome}/bin/mvn clean package"
     }
 }
